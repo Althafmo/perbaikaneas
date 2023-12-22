@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perbaikan EAS PWEB I</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .scrollable-container {
+            overflow-y: auto;
+            height: 300px;
+            border: 2px solid black;
+        }   
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="inputEmail" placeholder="Email" v-if="!isLoggedIn"/>
+        <input type="text" v-model="inputPassword" placeholder="Password" v-if="!isLoggedIn"/>
+        <button v-on:click="login" v-if="!isLoggedIn">login</button>
+        <button v-on:click="logout" v-if="isLoggedIn">logout</button>
+        <h2 v-if="isLoggedIn">Hello, {{ accountUsername }}!</h2>
+        <select v-model="currChatTarget" @change="setCurrentChannel" v-if="isLoggedIn">
+            <option disabled value="">Please select one</option>
+            <option v-for="channel in users" :key="channel.id">{{ channel.username }}</option>
+        </select>
+        <br>
+        <div class="scrollable-container" v-if="isLoggedIn">
+            <div v-for="message in messages" :key="message.id">
+              {{message.sender}} : {{ message.text }}
+            </div>
+        </div>
+        <input type="text" v-model="newMessage" placeholder="Enter Message" width="100" v-if="isLoggedIn">
+        <button v-on:click="sendMessage" v-if="isLoggedIn">↵</button>
+    </div>
+    <script src="main.js"></script>
+    
+</body>
+</html>
